@@ -34,7 +34,7 @@ service Listing {
 }
 
 message RegisterRequest {
-  string name = 1;
+  string screen_name = 1;
   string email = 2;
   google.protobuf.Timestamp birth_date = 3;
 }
