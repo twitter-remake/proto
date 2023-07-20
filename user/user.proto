@@ -1,0 +1,85 @@
+syntax = "proto3";
+
+package user;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "twitter_remake/protobuf/userpb";
+
+// User represents the user model
+message User {
+  string user_id = 1;
+  string name = 2;
+  string screen_name = 3;
+  string email = 4;
+  string bio = 5;
+  string location = 6;
+  string website = 7;
+  string profile_image_url = 8;
+  string profile_banner_url = 9;
+  google.protobuf.Timestamp birth_date = 10;
+  int32 followers_count = 11;
+  int32 followings_count = 12;
+  google.protobuf.Timestamp created_at = 13;
+  google.protobuf.Timestamp updated_at = 14;
+}
+
+// Listing service handles user registration and deletion
+service Listing {
+  // Register creates a new user
+  rpc Register(RegisterRequest) returns (RegisterResponse);
+
+  // DeleteUser deletes an existing user
+  rpc DeleteUser(DeleteUserRequest) returns (DeleteUserResponse);
+}
+
+message RegisterRequest {
+  string name = 1;
+  string email = 2;
+  google.protobuf.Timestamp birth_date = 3;
+}
+
+message RegisterResponse {
+  User user = 1;
+}
+
+message DeleteUserRequest {
+  string access_token = 1;
+}
+
+message DeleteUserResponse {
+  bool success = 1;
+}
+
+// Profile service handles user profile-related operations
+service Profile {
+  // Get returns the user profile
+  rpc Get(GetProfileRequest) returns (User);
+
+  // Get another user's profile by ID
+  rpc GetPublicProfile(GetPublicProfileRequest) returns (User);
+
+  // Edit updates the user profile
+  rpc Update(UpdateProfileRequest) returns (User);
+}
+
+message GetProfileRequest {
+  string access_token = 1;
+}
+
+message GetPublicProfileRequest {
+  // access_token is optional, it is used to check if the user is following the
+  // requested user
+  string access_token = 1;
+  string username = 2;
+}
+
+message UpdateProfileRequest {
+  string name = 1;
+  string bio = 2;
+  string location = 3;
+  string website = 4;
+  string profile_image_url = 5;
+  string profile_banner_url = 6;
+  google.protobuf.Timestamp birth_date = 7;
+}
