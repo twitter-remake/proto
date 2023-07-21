@@ -8,16 +8,16 @@ option go_package = "twitter_remake/protobuf/userpb";
 
 // User represents the user model
 message User {
-  string user_id = 1;
+  string id = 1;
   string name = 2;
   string screen_name = 3;
   string email = 4;
   string bio = 5;
   string location = 6;
   string website = 7;
+  google.protobuf.Timestamp birth_date = 10;
   string profile_image_url = 8;
   string profile_banner_url = 9;
-  google.protobuf.Timestamp birth_date = 10;
   int32 followers_count = 11;
   int32 followings_count = 12;
   google.protobuf.Timestamp created_at = 13;
@@ -34,9 +34,11 @@ service Listing {
 }
 
 message RegisterRequest {
-  string screen_name = 1;
-  string email = 2;
-  google.protobuf.Timestamp birth_date = 3;
+  string name = 1;
+  string screen_name = 2;
+  string email = 3;
+  string profile_image_url = 4;
+  google.protobuf.Timestamp birth_date = 5;
 }
 
 message RegisterResponse {
