@@ -85,3 +85,56 @@ message UpdateProfileRequest {
   string profile_banner_url = 6;
   google.protobuf.Timestamp birth_date = 7;
 }
+
+// Relationship service handles user relationship-related operations
+// such as following and unfollowing
+service Relationship {
+  // Follow adds a new relationship between the user and the target user
+  rpc Follow(RelationshipRequest) returns (RelationshipResponse);
+
+  // Unfollow removes the relationship between the user and the target user
+  rpc Unfollow(RelationshipRequest) returns (RelationshipResponse);
+
+  // GetFollowers returns a list of users that follow the user using
+  // cursor-based pagination (cursor is the last relationship created_at)
+  rpc GetFollowers(GetFollowersRequest) returns (GetFollowersResponse);
+
+  // GetFollowings returns a list of users that the user follows using
+  // cursor-based pagination (cursor is the last relationship created_at)
+  rpc GetFollowings(GetFollowingsRequest) returns (GetFollowingsResponse);
+}
+
+// RelationshipRequest is a generic request used by both Follow and Unfollow
+message RelationshipRequest {
+  string access_token = 1;
+  string target_user_id = 2;
+}
+
+// RelationshipResponse is a generic response used by both Follow and Unfollow
+message RelationshipResponse {
+  User user = 1;
+}
+
+message GetFollowersRequest {
+  string access_token = 1;
+  string username = 2;
+  int32 limit = 3;
+  google.protobuf.Timestamp cursor = 4;
+}
+
+message GetFollowersResponse {
+  repeated User users = 1;
+  google.protobuf.Timestamp next_cursor = 2;
+}
+
+message GetFollowingsRequest {
+  string access_token = 1;
+  string username = 2;
+  int32 limit = 3;
+  google.protobuf.Timestamp cursor = 4;
+}
+
+message GetFollowingsResponse {
+  repeated User users = 1;
+  google.protobuf.Timestamp next_cursor = 2;
+}
