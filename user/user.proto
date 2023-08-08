@@ -34,11 +34,12 @@ service Listing {
 }
 
 message RegisterRequest {
-  string name = 1;
-  string screen_name = 2;
-  string email = 3;
-  string profile_image_url = 4;
-  google.protobuf.Timestamp birth_date = 5;
+  string uuid = 1;
+  string name = 2;
+  string screen_name = 3;
+  string email = 4;
+  string profile_image_url = 5;
+  google.protobuf.Timestamp birth_date = 6;
 }
 
 message RegisterResponse {
